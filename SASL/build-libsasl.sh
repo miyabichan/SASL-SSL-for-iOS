@@ -23,7 +23,7 @@
 #									  #
 VERSION="2.1.23"							  #
 SDKVERSION="4.3"							  #
-OPENSSL="${PWD}/../OpenSSL"							  #
+OPENSSL="${PWD}/../OpenSSL"						  #
 #									  #
 ###########################################################################
 #									  #
@@ -62,9 +62,9 @@ echo "Please stand by..."
 
 pushd "${CURRENTPATH}/src/cyrus-sasl-${VERSION}"
 
-CC="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
-CFLAGS="-isysroot /Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -I"${OPENSSL}/include" -L"${OPENSSL}" -arch ${ARCH} -pipe -Os -gdwarf-2"
-#LDFLAGS="-isysroot /Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -arch ${ARCH}"
+CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
+CFLAGS="-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -I"${OPENSSL}/include" -L"${OPENSSL}" -arch ${ARCH} -pipe -Os -gdwarf-2"
+#LDFLAGS="-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -arch ${ARCH}"
 mkdir -p "${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}.sdk"
 
 LOG="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}.sdk/build-cyrus-sasl-${VERSION}.log"
@@ -98,9 +98,9 @@ echo "Please stand by..."
 
 pushd "${CURRENTPATH}/src/cyrus-sasl-${VERSION}"
 
-CC="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
-CFLAGS="-isysroot /Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -I"${OPENSSL}/include" -L"${OPENSSL}" -arch ${ARCH} -pipe -Os -gdwarf-2"
-#LDFLAGS="-isysroot /Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -arch ${ARCH}"
+CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
+CFLAGS="-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -I"${OPENSSL}/include" -L"${OPENSSL}" -arch ${ARCH} -pipe -Os -gdwarf-2"
+#LDFLAGS="-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -arch ${ARCH}"
 mkdir -p "${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
 LOG="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/build-cyrus-sasl-${VERSION}.log"
@@ -134,9 +134,9 @@ echo "Please stand by..."
 
 pushd "${CURRENTPATH}/src/cyrus-sasl-${VERSION}"
 
-CC="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
-CFLAGS="-isysroot /Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -I"${OPENSSL}/include" -L"${OPENSSL}" -arch ${ARCH} -pipe -Os -gdwarf-2"
-#LDFLAGS="-isysroot /Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -arch ${ARCH}"
+CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
+CFLAGS="-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -I"${OPENSSL}/include" -L"${OPENSSL}" -arch ${ARCH} -pipe -Os -gdwarf-2"
+#LDFLAGS="-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk -arch ${ARCH}"
 mkdir -p "${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
 LOG="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/build-cyrus-sasl-${VERSION}.log"

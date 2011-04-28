@@ -60,20 +60,20 @@ PLATFORM="iPhoneSimulator"
 echo "Building openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 echo "Please stand by..."
 
-CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
-CFLAGS="-D_DARWIN_C_SOURCE -UOPENSSL_BN_ASM_PART_WORDS -arch ${ARCH} -isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk"
-LDFLAGS="-arch ${ARCH} -dynamiclib"
+export CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc -arch ${ARCH}"
 mkdir -p "${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}.sdk"
 
 LOG="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}.sdk/build-openssl-${VERSION}.log"
 
 echo "Configure openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 
-./config no-shared no-asm no-krb5 no-gost zlib --openssldir="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}.sdk" > "${LOG}" 2>&1
+./configure BSD-generic32 --openssldir="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}.sdk" > "${LOG}" 2>&1
+# add -isysroot to CC=
+sed -ie "s!^CFLAG=!CFLAG=-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk !" "Makefile"
 
 echo "Make openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 
-make CC="${CC}" CFLAG="${CFLAGS}" SHARED_LDFLAGS="${LDFLAGS}" >> "${LOG}" 2>&1
+make >> "${LOG}" 2>&1
 make install >> "${LOG}" 2>&1
 make clean >> "${LOG}" 2>&1
 
@@ -87,21 +87,22 @@ PLATFORM="iPhoneOS"
 echo "Building openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 echo "Please stand by..."
 
-CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
-CFLAGS="-D_DARWIN_C_SOURCE -UOPENSSL_BN_ASM_PART_WORDS -arch ${ARCH} -isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk"
-LDFLAGS="-arch ${ARCH} -dynamiclib"
+export CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc -arch ${ARCH}"
 mkdir -p "${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
 LOG="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/build-openssl-${VERSION}.log"
 
 echo "Configure openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 
-./config no-shared no-asm no-krb5 no-gost zlib --openssldir="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" > "${LOG}" 2>&1
+./configure BSD-generic32 --openssldir="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" > "${LOG}" 2>&1
+
+sed -ie "s!^CFLAG=!CFLAG=-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk !" "Makefile"
+# remove sig_atomic for iPhoneOS
+sed -ie "s!static volatile sig_atomic_t intr_signal;!static volatile intr_signal;!" "crypto/ui/ui_openssl.c"
 
 echo "Make openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 
-
-make CC="${CC}" CFLAG="${CFLAGS}" SHARED_LDFLAGS="${LDFLAGS}" >> "${LOG}" 2>&1
+make >> "${LOG}" 2>&1
 make install >> "${LOG}" 2>&1
 make clean >> "${LOG}" 2>&1
 
@@ -115,25 +116,27 @@ PLATFORM="iPhoneOS"
 echo "Building openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 echo "Please stand by..."
 
-CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
-CFLAGS="-D_DARWIN_C_SOURCE -UOPENSSL_BN_ASM_PART_WORDS -arch ${ARCH} -isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk"
-LDFLAGS="-arch ${ARCH} -dynamiclib"
+export CC="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc -arch ${ARCH}"
 mkdir -p "${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
 LOG="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/build-openssl-${VERSION}.log"
 
 echo "Configure openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 
-./config no-shared no-asm no-krb5 no-gost zlib --openssldir="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" > "${LOG}" 2>&1
+./configure BSD-generic32 --openssldir="${CURRENTPATH}/bin/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" > "${LOG}" 2>&1
+
+sed -ie "s!^CFLAG=!CFLAG=-isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk !" "Makefile"
+# remove sig_atomic for iPhoneOS
+sed -ie "s!static volatile sig_atomic_t intr_signal;!static volatile intr_signal;!" "crypto/ui/ui_openssl.c"
 
 echo "Make openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}"
 
-
-make CC="${CC}" CFLAG="${CFLAGS}" SHARED_LDFLAGS="${LDFLAGS}" >> "${LOG}" 2>&1
+make >> "${LOG}" 2>&1
 make install >> "${LOG}" 2>&1
 make clean >> "${LOG}" 2>&1
 
 echo "Building openssl for ${PLATFORM} ${SDKVERSION} ${ARCH}, finished"
+
 #############
 
 #############
